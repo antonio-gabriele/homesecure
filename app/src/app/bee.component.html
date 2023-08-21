@@ -1,0 +1,52 @@
+<mat-card appearance="outlined" class="m-p-5px">
+  <mat-card-content>
+    <button mat-raised-button
+            color="accent"
+            (click)="PermitJoin()">PermitJoin</button>
+    <button mat-raised-button
+            color="accent"
+            (click)="Explore()">Esplora</button>
+  </mat-card-content>
+</mat-card>
+<mat-card appearance="outlined" class="m-p-5px"
+          *ngFor="let channel of channels">
+  <mat-card-header>
+    <mat-card-title>{{channel.manufacturerName | uppercase}} {{channel.modelIdentifier | uppercase}} {{channel.IEEEAddress | uppercase }}</mat-card-title>
+    <mat-card-subtitle>{{channel.endpointId}}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content *ngIf="channel.enabled"
+                    class="m-10px-t">
+    <mat-form-field appearance="outline">
+      <mat-label>Stanza</mat-label>
+      <input matInput
+             placeholder="Stanza"
+             [(ngModel)]="channel.room"
+             (ngModelChangeDebounced)="ChannelSave(channel)">
+    </mat-form-field>
+    <mat-form-field appearance="outline"
+                    class="m-p-5px-o">
+      <mat-label>Nome</mat-label>
+      <input matInput
+             placeholder="Nome"
+             [(ngModel)]="channel.name"
+             (ngModelChangeDebounced)="ChannelSave(channel)">
+    </mat-form-field>
+    <mat-accordion>
+      <mat-expansion-panel hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title> Behaviours </mat-panel-title>
+        </mat-expansion-panel-header>
+        <mat-list>
+          <mat-list-item *ngFor="let behaviour of channel.behaviours">
+            <mat-slide-toggle [(ngModel)]="behaviour.enabled"
+                              (ngModelChangeDebounced)="BehaviourSave(behaviour)">{{behaviour.behaviour}}</mat-slide-toggle>
+          </mat-list-item>
+        </mat-list>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <mat-slide-toggle [(ngModel)]="channel.enabled"
+                      (ngModelChangeDebounced)="ChannelSave(channel)">Abilita</mat-slide-toggle>
+  </mat-card-actions>
+</mat-card>

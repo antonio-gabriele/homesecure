@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="f3ec28f4-1c09-40dc-bf44-d692daf8d6a0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/app/src/app/bee.component.html" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/app/bee.component.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/app/bee.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/app/bee.component.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/bee.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/explorator.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/logical.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/models.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/nodeTable.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/seed.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/z.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/adapter_endpoints.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/adapter_info.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/adapter_initialise.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/adapter_reset.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/device_state.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/events.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/joining.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/messages.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/network_manager.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_address.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_bind.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_description.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_endpoint_description.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_endpoints.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_read_binding_table.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_receive_message.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_remove.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_request.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_send_message.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_table.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/node_unbind.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/nvram.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/framework/bee/zstack/zstack.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/gorm.db" beforeDir="false" afterPath="$PROJECT_DIR$/edge/gorm.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/edge/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/edge/main.go" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2TeP8y1jl4ktJTMVLnQOO5OlFLu" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.go.migrated.go.modules.settings": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/anton"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="VgoProject">
+    <settings-migrated>true</settings-migrated>
+  </component>
+</project>

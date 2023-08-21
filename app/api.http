@@ -1,0 +1,97 @@
+POST https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/ext/fnnpwr?ordine=42967708
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/ext/fnnpwr?ordine=42967708
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/ext/stp?ip=10.0.0.2
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/ext/mchndmns?mchnid=FCAE434167BDBCC7E053050012ACAE15
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/magazzinoarticoli/
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/magazzinovalori/
+###
+GET https://mangone-iotedge-02.alfagomma.io:8181/ords/iot/magazzinovalori/?q={"codice":{"$eq":"H1100404-040000"}}
+###
+GET https://api.agcloud.it/crimp/table/automatrix
+Authorization: Bearer NDkyYjNlYzkwOWYzNGJlZGFhZTJiOGJjOThhMDdiOWViMWQ4
+###
+GET https://nodered-mangone-iotedge-01.alfagomma.io:1880/finnp/setup?o=000042934698
+###
+--------
+apex_exec.add_parameter( l_params, 'ordine', :ordine);
+apex_exec.execute_rest_source(p_static_id => 'SAP1', p_operation => 'GET', p_parameters => l_params );
+s_response := apex_exec.get_parameter_clob(l_params, 'response');
+j_sap1 := JSON_OBJECT_T(JSON_OBJECT_T.PARSE(s_response).get_array('result').get(0)).get_object('Parameters');
+--------
+apex_json.open_object('sap1');
+keys := j_sap1.get_keys;
+for i in 1..keys.count loop
+    apex_json.write(keys(i), j_sap1.get_string(keys(i)));
+end loop;
+apex_json.close_object;
+--------
+apex_exec.execute_rest_source(p_static_id => 'SAP2', p_operation => 'GET', p_parameters => l_params );
+s_response := apex_exec.get_parameter_clob(l_params, 'response');
+j_sap2 := JSON_OBJECT_T(JSON_OBJECT_T.PARSE(s_response).get_array('result').get(0)).get_object('Parameters').get_object('ST_FU0016_01');
+--------
+apex_json.open_object('sap2');
+keys := j_sap2.get_keys;
+for i in 1..keys.count loop
+    apex_json.write(keys(i), j_sap2.get_string(keys(i)));
+end loop;
+apex_json.close_object;
+--------
+apex_exec.execute_rest_source(p_static_id => 'AGCLOUD1', p_operation => 'POST', p_parameters => l_params );
+s_response := apex_exec.get_parameter_clob(l_params, 'response');
+j_agcloud1 := JSON_OBJECT_T.PARSE(s_response);    
+--------
+apex_exec.add_parameter( l_params, 'Authorization', 'Bearer ' || j_agcloud1.get_string('access_token') );
+apex_exec.add_parameter( l_params, 'ferrule_code', j_sap1.get_string('E_FERRULE_BISMT'));
+apex_exec.add_parameter( l_params, 'hose_code', j_sap1.get_string('E_HOSE_BISMT'));
+apex_exec.add_parameter( l_params, 'id_hose', j_sap1.get_string('E_ID_HOSE_MM'));
+apex_exec.execute_rest_source(p_static_id => 'AGCLOUD2', p_operation => 'GET', p_parameters => l_params );
+s_response := apex_exec.get_parameter_clob(l_params, 'response');
+j_agcloud2 := JSON_OBJECT_T(json_object_t.parse(s_response).get_array('data').get(0));
+--------
+apex_json.open_object('agcloud');
+keys := j_agcloud2.get_keys;
+for i in 1..keys.count loop
+    apex_json.write(keys(i), j_agcloud2.get_string(keys(i)));
+end loop;
+apex_json.close_object;
+---
+
+
+
+    var autorecipe = 'AUT0RECIPE';
+    var receipt0: any = await this.ReadReceipt(autorecipe);
+    var tokens0: string[] = receipt0.msg.split(';');
+    tokens0.splice(0, 3);
+    console.log(this.shopOrder);
+    tokens0 = [...[this.shopOrderNo, this.shopOrder.agcloud.crimp_diameter], ...tokens0];
+    var text0 = tokens0.join(';');
+    await this.WriteReceipt(text0);
+    var qta = this.shopOrder.sap2.ST_FU0016_01.TARGET_QUANTITY;
+    await this.ActivateJob(this.shopOrderNo, qta);
+
+
+  async WriteReceipt(definition: string) {
+    /*
+    await firstValueFrom(this.httpClient.post(`${this.base}/finnp/execute`, {
+      ip: this.ip,
+      cmd: `@WR;${definition};`
+    }));
+    */
+  }
+
+  async ActivateJob(receipt: string, pieces: number) {
+    var now = (new Date).toISOString().replace(/(\.\d{3})|[^\d]/g, '');
+    var jobId = `${receipt}_${now}`;
+    console.log(jobId);
+    /*
+    await firstValueFrom(this.httpClient.post(`${this.base}/finnp/execute`, {
+      ip: this.ip,
+      cmd: `@AJ;${receipt};${pieces};${jobId}`
+    }));
+    */
+  }

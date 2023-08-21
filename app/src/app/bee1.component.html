@@ -1,0 +1,66 @@
+<div class="row margin-bottom-4px margin-top-4px">
+  <div class="col-12">
+    <button mat-raised-button color="accent" class=" btn-danger w-100"
+            [routerLink]="'/bee'"
+            >Indietro</button>
+  </div>
+</div>
+<div class="row margin-bottom-4px"
+     *ngFor="let behaviour of behaviours">
+  <div class="col-12">
+    <button mat-raised-button color="accent" class=" btn-primary w-100"
+            (click)="Open(content, behaviour)">{{behaviour.cluster_name}}</button>
+  </div>
+</div>
+<ng-template #content
+             let-offcanvas>
+  <div class="offcanvas-body">
+    <div class="row margin-bottom-4px align-items-center">
+      <div class="col-8">
+        <b>Behaviour {{behaviour.cluster_name}}</b>
+      </div>
+      <div class="col-4">
+        <button mat-raised-button color="accent" 
+                (click)="BehaviourToggle(behaviour)"
+                [class]="behaviour.enabled ? 'btn-success' : 'btn-danger'">{{behaviour.enabled ? 'Disattiva' : 'Attiva'}}</button>
+      </div>
+    </div>
+    <div class="row margin-bottom-4px align-items-center">
+      <div class="col-8">
+      </div>
+      <div class="col-4">
+        <button mat-raised-button color="accent" 
+                
+                (click)="offcanvas.dismiss('Cross click')">Chiudi</button>
+      </div>
+    </div>
+    <div class="row margin-bottom-4px align-items-center" *ngIf="properties.length">
+      <div class="col-4">
+        <b>Properties</b>
+      </div>
+    </div>
+    <div class="row margin-bottom-4px align-items-center"
+         *ngFor="let property of properties">
+      <div class="col-8">{{property.property}}</div>
+      <div class="col-4">
+        <button mat-raised-button color="accent" 
+                (click)="PropertyToggle(property)"
+                [class]="property.enabled ? 'btn-success' : 'btn-danger'">{{property.enabled ? 'Disattiva' : 'Attiva'}}</button>
+      </div>
+    </div>
+    <div class="row margin-bottom-4px align-items-center" *ngIf="commands.length">
+      <div class="col-4">
+        <b>Commands</b>
+      </div>
+    </div>
+    <div class="row margin-bottom-4px align-items-center"
+         *ngFor="let command of commands">
+      <div class="col-8">{{command.command}}</div>
+      <div class="col-4">
+        <button mat-raised-button color="accent" 
+                (click)="CommandToggle(command)"
+                [class]="command.enabled ? 'btn-success' : 'btn-danger'">{{command.enabled ? 'Disattiva' : 'Attiva'}}</button>
+      </div>
+    </div>
+  </div>
+</ng-template>

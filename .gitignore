@@ -1,0 +1,9 @@
+edge/main.exe
+edge/test/node_modules/
+test/node_modules/
+edge/__debug_bin.exe
+gateway/pkg/
+*.exe
+gateway/build/
+edge/build/
+edge/pkg/

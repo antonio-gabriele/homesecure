@@ -1,0 +1,81 @@
+package gateway
+
+import (
+	"bytes"
+	"crypto/ecdsa"
+	"crypto/elliptic"
+	"crypto/rand"
+	"crypto/x509"
+	"crypto/x509/pkix"
+	"encoding/pem"
+	"math/big"
+	"net"
+	"os"
+	"time"
+)
+
+func checkPrivateKey() {
+	_, err := os.Stat("tls.key")
+	if os.IsNotExist(err) {
+		privateKey, _ := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)
+		key, _ := x509.MarshalECPrivateKey(privateKey)
+		buffer := &bytes.Buffer{}
+		pem.Encode(buffer, &pem.Block{Type: "EC PRIVATE KEY", Bytes: key})
+		os.WriteFile("tls.key", buffer.Bytes(), 0600)
+	}
+}
+
+func ReadPrivateKey() *ecdsa.PrivateKey {
+	key, _ := os.ReadFile("tls.key")
+	block, _ := pem.Decode(key)
+	privateKey, _ := x509.ParseECPrivateKey(block.Bytes)
+	return privateKey
+}
+
+func ReadCertificate() *x509.Certificate {
+	crt, _ := os.ReadFile("tls.crt")
+	block, _ := pem.Decode(crt)
+	certificate, _ := x509.ParseCertificate(block.Bytes)
+	return certificate
+}
+
+func checkCertificate() {
+	_, err := os.Stat("tls.crt")
+	if os.IsNotExist(err) {
+		parameters := x509.Certificate{
+			SerialNumber: big.NewInt(1),
+			Subject: pkix.Name{
+				Organization: []string{"Acme Co"},
+			},
+			NotBefore:             time.Now(),
+			NotAfter:              time.Now().Add(time.Hour * 24 * 180),
+			KeyUsage:              x509.KeyUsageKeyEncipherment | x509.KeyUsageDigitalSignature,
+			ExtKeyUsage:           []x509.ExtKeyUsage{x509.ExtKeyUsageServerAuth},
+			BasicConstraintsValid: true,
+		}
+		parameters.DNSNames = []string{"localhost"}
+		interfaces, _ := net.Interfaces()
+		for _, interfac := range interfaces {
+			addresses, _ := interfac.Addrs()
+			for _, address := range addresses {
+				switch v := address.(type) {
+				case *net.IPAddr:
+				case *net.IPNet:
+					if v.IP.IsPrivate() && v.IP.To4() != nil {
+						parameters.IPAddresses = append(parameters.IPAddresses, v.IP)
+					}
+				}
+			}
+		}
+		privateKey := ReadPrivateKey()
+		certificate, _ := x509.CreateCertificate(rand.Reader, &parameters, &parameters, &privateKey.PublicKey, privateKey)
+		buffer := &bytes.Buffer{}
+		pem.Encode(buffer, &pem.Block{Type: "CERTIFICATE", Bytes: certificate})
+		os.WriteFile("tls.crt", buffer.Bytes(), 0600)
+	}
+}
+
+func CheckCertificate() {
+	checkPrivateKey()
+	checkCertificate()
+}

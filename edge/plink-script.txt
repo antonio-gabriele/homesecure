@@ -1,0 +1,6 @@
+#killall proto-bee
+killall core-bus
+killall core-gateway
+#chmod +x /opt/cobra/proto-bee
+chmod +x /opt/cobra/core-bus
+chmod +x /opt/cobra/core-gateway
